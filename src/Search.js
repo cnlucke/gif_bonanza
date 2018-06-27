@@ -1,6 +1,4 @@
-import _ from 'lodash'
 import React, { Component } from 'react'
-import GifGrid from './GifGrid'
 
 // look up how to hide this better
 const API = 'bA5hdtPeLmhh5ADZ45ZopEfJpPvE5Ow8'
@@ -17,46 +15,58 @@ export default class Search extends Component {
   }
 
   globalStyle = {
-    border: '3px solid blue',
+    border: '3px solid',
     borderRadius: '25px',
-    height: '60px',
+    height: '40px',
     width: '300px',
-    display: 'block',
-    margin: '0 auto',
-    marginTop: '20px',
-    marginBottom: '20px',
+    display: 'inline-block',
+    margin: '10px',
+    paddingLeft: '10px',
+  }
+
+  submitStyle = {
+    border: '3px solid',
+    borderRadius: '25px',
+    height: '40px',
+    width: '100px',
+    display: 'inline-block',
+    margin: '10px',
   }
 
   // https://api.giphy.com/v1/gifs/search?api_key=${API_KEY}&q=dogs&limit=25&offset=0&rating=G&lang=en
-  getGifs = () => {
+  handleSearchSubmit = (event) => {
+    event.preventDefault();
     fetch(`https://api.giphy.com/v1/gifs/search?api_key=${API}&q=${this.state.value}&limit=${NUM_GIFS}&offset=0&rating=G&lang=en`)
-      .then(res => res.json())
-      .then(results => this.setState({ results: results.data }))
+    .then(res => res.json())
+    .then(results => this.props.handleSearchResults(results.data))
   }
 
   resetComponent = () => this.setState({ isLoading: false, results: [], value: '' })
 
-  handleSearchChange = (e) => {
+  handleChange = (e) => {
     this.setState({ isLoading: true, value: e.target.value })
 
     setTimeout(() => {
       if (this.state.value.length < 1) return this.resetComponent()
-      this.getGifs()
     }, 300)
   }
 
   render() {
-    const { value, results } = this.state
-    console.log("value in render:", value)
     return (
-      <div>
+      <form onSubmit={this.handleSearchSubmit} style={{textAlign: "center"}}>
         <input
-          onChange={_.debounce(this.handleSearchChange, 500, { leading: true })}
-          value={value}
-          style={this.globalStyle}
+        type="text"
+        value={this.state.value}
+        onChange={this.handleChange}
+        style={this.globalStyle}
+        placeholder="enter search term"
         />
-        <GifGrid results={results} />
-      </div>
+        <input
+        type="submit"
+        value="Submit"
+        style={this.submitStyle}
+        />
+      </form>
     )
   }
 }
