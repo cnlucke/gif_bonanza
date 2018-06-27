@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Route } from 'react-router-dom';
 import './App.css';
 import Search from './Search'
 import GifGrid from './GifGrid'
@@ -8,37 +9,61 @@ class App extends Component {
     searchResults: [],
     favorites: [],
     showFavorites: false,
+    showFavoriteAdded: false,
   }
 
   handleSearchResults = (results) => {
     this.setState({
-      searchResults: results
-    }, () => console.log("searchResults:", this.state.searchResults))
+      searchResults: results,
+      showFavorites: false,
+    })
   }
 
   handleFavorite = (gif) => {
-    this.setState({
-      favorites: [...this.state.favorites, gif]
-    }, () => console.log("favorites:", this.state.favorites))
+    if (!this.state.favorites.includes(gif)) {
+      this.setState({
+        favorites: [...this.state.favorites, gif]
+      }, this.toggleFavoriteAdded)
+    }
   }
 
   toggleFavorites = () => {
     this.setState({ showFavorites: !this.state.showFavorites })
   }
 
+  toggleFavoriteAdded = () => {
+    console.log("TOgGLE FAVE ADDED!!")
+    this.setState({ showFavoriteAdded: true }, () => console.log("show favorite added"))
+
+    window.setTimeout(() => {
+      this.setState({
+        showFavoriteAdded: false
+      }, () => console.log("don't show any more..."));
+    }, 2000);
+  }
+
   render() {
-    console.log("showFavorites:", this.state.showFavorites)
-    console.log("favorites:", this.state.favorites)
-    console.log("searchResults:", this.state.searchResults)
     const list = this.state.showFavorites ? this.state.favorites : this.state.searchResults
-    console.log("list:", list)
     return (
       <div>
         <Search handleSearchResults={this.handleSearchResults}/>
-        <GifGrid
-          list={list}
-          toggleFavorites={this.toggleFavorites}
-          clickFavorites={this.clickFavorites}/>
+        <Route exact path="/" render={() => (
+          <GifGrid
+            list={list}
+            showFavorites={this.state.showFavorites}
+            toggleFavorites={this.toggleFavorites}
+            handleFavorite={this.handleFavorite}
+            showFavoriteAdded={this.state.showFavoriteAdded}
+            clickFavorites={this.clickFavorites}/>
+        )} />
+        <Route exact path="/favorites" render={() => (
+          <GifGrid
+            list={list}
+            showFavorites={this.state.showFavorites}
+            toggleFavorites={this.toggleFavorites}
+            handleFavorite={this.handleFavorite}
+            clickFavorites={this.clickFavorites}/>
+        )} />
       </div>
     );
   }

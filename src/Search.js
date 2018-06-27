@@ -36,7 +36,8 @@ export default class Search extends Component {
   // https://api.giphy.com/v1/gifs/search?api_key=${API_KEY}&q=dogs&limit=25&offset=0&rating=G&lang=en
   handleSearchSubmit = (event) => {
     event.preventDefault();
-    fetch(`https://api.giphy.com/v1/gifs/search?api_key=${API}&q=${this.state.value}&limit=${NUM_GIFS}&offset=0&rating=G&lang=en`)
+    console.log("GIPHY_API_KEY:", process.env.REACT_APP_GIPHY_API_KEY)
+    fetch(`https://api.giphy.com/v1/gifs/search?api_key=${process.env.REACT_APP_GIPHY_API_KEY}&q=${this.state.value}&limit=${NUM_GIFS}&offset=0&rating=G&lang=en`)
     .then(res => res.json())
     .then(results => this.props.handleSearchResults(results.data))
   }
