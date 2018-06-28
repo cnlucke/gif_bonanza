@@ -15,6 +15,7 @@
 
 input:focus, button:focus{
   outline: none;
+  background-color: white;
 }
 
 button, input {
@@ -54,7 +55,7 @@ p {
 }
 
 .message {
-  margin: 4px;
+  margin: 5px;
 }
 
 /************************************** GRID **********************************/
