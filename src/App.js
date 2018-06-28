@@ -73,7 +73,7 @@ class App extends Component {
   render() {
     return (
       <div data-test="component-app">
-        <Search handleSearchResults={this.handleSearchResults}/>
+        <Search handleSearchResults={this.handleSearchResults} history={this.props.history}/>
         <GifGrid
           list={Array.from(this.getList())}
           showFavorites={this.state.showFavorites}

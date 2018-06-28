@@ -13,7 +13,7 @@ export default class Search extends Component {
 
   handleSearchSubmit = (event) => {
     event.preventDefault();
-    window.history.pushState("", "", '/');
+    this.props.history.push('/')
     fetch(`https://api.giphy.com/v1/gifs/search?api_key=${process.env.REACT_APP_GIPHY_API_KEY}&q=${this.state.value}&limit=${NUM_GIFS}&offset=0&rating=G&lang=en`)
     .then(res => res.json())
     .then(results => this.props.handleSearchResults(results.data))
