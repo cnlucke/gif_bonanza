@@ -1,8 +1,16 @@
 
 #global {
-  background-color: #f2f2f2
+  background-color: #f2f2f2;
+  text-align:center;
+  font-family: 'Dosis', sans-serif;
 }
 
+#welcome {
+  color: #336699;
+  font-size: 40px;
+  margin-top: 5px;
+  margin-bottom: 0px;
+}
 /********************************** INPUT/BUTTONS *****************************/
 
 input:focus, button:focus{
@@ -46,7 +54,7 @@ p {
 }
 
 .message {
-  margin: 2px;
+  margin: 4px;
 }
 
 /************************************** GRID **********************************/
@@ -59,7 +67,7 @@ div.ui.grid {
 }
 
 .row {
-  padding: 0;
+  padding-top: 0;
 }
 
 /************************************** IMGS **********************************/
