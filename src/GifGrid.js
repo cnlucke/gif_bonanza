@@ -26,9 +26,9 @@ const GifGrid = (props) => {
 
   const buttonLink = () => {
     return (showFavorites) ?
-    <Link to="/">{"back to search results"}</Link>
+    <Link to="/" data-test="see-fave-button-text">{"back to search results"}</Link>
      :
-     <Link to="/favorites">{"see favorites"}</Link>
+     <Link to="/favorites" data-test="see-fave-button-text">{"see favorites"}</Link>
   }
   return (
     <div style={{textAlign: "center"}} data-test="component-gifgrid">

@@ -15,3 +15,7 @@
   * Entering a search term in the input field and clicking `Search` button causes page to navigate away from '/favorites' path back to the Search page where you can view the search results.
   * You can also return to search results from Favorites page by clicking button `back to search results`
   * Remove gif from the Favorites page by clicking the 'X' in the top right corner of the gif.
+
+## Tests
+
+Basic unit tests have been written using Jest and Enzyme. To execute the tests from the root directory, execute `yarn test`.
