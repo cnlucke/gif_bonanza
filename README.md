@@ -18,4 +18,4 @@
 
 ## Tests
 
-Basic unit tests have been written using Jest and Enzyme. To execute the tests from the root directory, execute `yarn test`.
+Basic unit tests have been written using Jest and Enzyme. To execute the tests from the root directory, run `yarn test`.
