@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 
 // look up how to hide this better
-const API = 'bA5hdtPeLmhh5ADZ45ZopEfJpPvE5Ow8'
 const NUM_GIFS = 24
 
 export default class Search extends Component {
@@ -15,7 +14,7 @@ export default class Search extends Component {
   }
 
   globalStyle = {
-    border: '3px solid',
+    // border: '3px solid',
     borderRadius: '25px',
     height: '40px',
     width: '300px',
@@ -25,7 +24,7 @@ export default class Search extends Component {
   }
 
   submitStyle = {
-    border: '3px solid',
+    // border: '3px solid',
     borderRadius: '25px',
     height: '40px',
     width: '100px',
@@ -36,7 +35,7 @@ export default class Search extends Component {
   // https://api.giphy.com/v1/gifs/search?api_key=${API_KEY}&q=dogs&limit=25&offset=0&rating=G&lang=en
   handleSearchSubmit = (event) => {
     event.preventDefault();
-    console.log("GIPHY_API_KEY:", process.env.REACT_APP_GIPHY_API_KEY)
+    window.history.pushState("", "", '/');
     fetch(`https://api.giphy.com/v1/gifs/search?api_key=${process.env.REACT_APP_GIPHY_API_KEY}&q=${this.state.value}&limit=${NUM_GIFS}&offset=0&rating=G&lang=en`)
     .then(res => res.json())
     .then(results => this.props.handleSearchResults(results.data))
@@ -56,7 +55,7 @@ export default class Search extends Component {
     return (
       <form onSubmit={this.handleSearchSubmit} style={{textAlign: "center"}}>
         <input
-        type="text"
+        type="search"
         value={this.state.value}
         onChange={this.handleChange}
         style={this.globalStyle}
@@ -64,7 +63,7 @@ export default class Search extends Component {
         />
         <input
         type="submit"
-        value="Submit"
+        value="Search"
         style={this.submitStyle}
         />
       </form>
