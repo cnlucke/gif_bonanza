@@ -1,38 +1,16 @@
 import React, { Component } from 'react'
 
-// look up how to hide this better
-const NUM_GIFS = 24
+const NUM_GIFS = 24 // number of gifs to fetch at a time
 
 export default class Search extends Component {
   state = {
     value: '',
-    isLoading: false,
     results: [],
   }
   componentWillMount() {
     this.resetComponent()
   }
 
-  globalStyle = {
-    // border: '3px solid',
-    borderRadius: '25px',
-    height: '40px',
-    width: '300px',
-    display: 'inline-block',
-    margin: '10px',
-    paddingLeft: '10px',
-  }
-
-  submitStyle = {
-    // border: '3px solid',
-    borderRadius: '25px',
-    height: '40px',
-    width: '100px',
-    display: 'inline-block',
-    margin: '10px',
-  }
-
-  // https://api.giphy.com/v1/gifs/search?api_key=${API_KEY}&q=dogs&limit=25&offset=0&rating=G&lang=en
   handleSearchSubmit = (event) => {
     event.preventDefault();
     window.history.pushState("", "", '/');
@@ -41,10 +19,10 @@ export default class Search extends Component {
     .then(results => this.props.handleSearchResults(results.data))
   }
 
-  resetComponent = () => this.setState({ isLoading: false, results: [], value: '' })
+  resetComponent = () => this.setState({ results: [], value: '' })
 
   handleChange = (e) => {
-    this.setState({ isLoading: true, value: e.target.value })
+    this.setState({ value: e.target.value })
 
     setTimeout(() => {
       if (this.state.value.length < 1) return this.resetComponent()
@@ -53,18 +31,24 @@ export default class Search extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSearchSubmit} style={{textAlign: "center"}}>
+      <form
+        onSubmit={this.handleSearchSubmit}
+        style={{textAlign: "center"}}
+        data-test="component-search">
         <input
+        id="search-input"
         type="search"
+        name="search"
         value={this.state.value}
         onChange={this.handleChange}
-        style={this.globalStyle}
         placeholder="enter search term"
+        data-test="search-input"
         />
         <input
         type="submit"
+        id="search-button"
         value="Search"
-        style={this.submitStyle}
+        data-test="search-button"
         />
       </form>
     )

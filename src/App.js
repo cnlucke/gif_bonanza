@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
 import './App.css';
 import Search from './Search'
 import GifGrid from './GifGrid'
@@ -13,10 +12,11 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const currentFavorites = JSON.parse(localStorage.getItem("favoritesArray")) || []
-    console.log("on mount: currentFavorites", JSON.parse(localStorage.getItem("favoritesArray")))
-    this.setState({ favorites: currentFavorites }, () => console.log("on mount: this.state.favorites", this.state.favorites))
+    // Get favorites from localStorage if they exist
+    const currentFavorites = JSON.parse(localStorage.getItem("favoritesArray"))
+    this.setState({ favorites: currentFavorites })
 
+    // for refresh at /favorites path
     if (window.location.pathname === '/favorites') {
       this.toggleFavorites()
     }
@@ -30,14 +30,11 @@ class App extends Component {
   }
 
   handleAddFavorite = (gif) => {
-    console.log("this.state.favorites on add:", this.state.favorites)
-    console.log("this.state.favorites type:", Array.isArray(this.state.favorites))
     if (!this.state.favorites.find(item => item.id === gif.id)) {
       this.setState({
         favorites: [...this.state.favorites, gif]
       }, () => {
         this.toggleFavoriteAdded()
-        console.log("pushing to localStorage!")
         localStorage.setItem('favoritesArray', JSON.stringify(this.state.favorites));
       })
     }
@@ -53,9 +50,7 @@ class App extends Component {
     }
   }
 
-  toggleFavorites = () => {
-    this.setState({ showFavorites: !this.state.showFavorites })
-  }
+  toggleFavorites = () => this.setState({ showFavorites: !this.state.showFavorites })
 
   toggleFavoriteAdded = () => {
     this.setState({ showFavoriteAdded: true })
@@ -72,25 +67,15 @@ class App extends Component {
   }
 
   getList = () => {
-    if (window.location.pathname === '/favorites') {
-      console.log("this.getFavorites:", this.getFavorites())
-      console.log("localStorage:", JSON.parse(localStorage.getItem("favoritesArray")))
-      console.log("this.state.favorites:", this.state.favorites)
-      return this.getFavorites()
-    } else {
-      return this.state.showFavorites ? this.getFavorites() : this.state.searchResults
-    }
+    return (window.location.pathname === '/favorites') ? this.getFavorites() : this.state.searchResults
   }
 
   render() {
-    if (window.location.pathname === '/favorites') {
-      console.log("App.js list:", Array.from(this.state.favorites))
-    }
     return (
-      <div>
+      <div data-test="component-app">
         <Search handleSearchResults={this.handleSearchResults}/>
         <GifGrid
-          list={this.getList()}
+          list={Array.from(this.getList())}
           showFavorites={this.state.showFavorites}
           toggleFavorites={this.toggleFavorites}
           handleAddFavorite={this.handleAddFavorite}

@@ -4,10 +4,7 @@ import { Link } from 'react-router-dom';
 
 const GifGrid = (props) => {
   const { list, showFavorites, showFavoriteAdded } = props
-  if (window.location.pathname === '/favorites') {
-    console.log("GifGrid list:", Array.from(list))
-  }
-  const columns = Array.from(list).map( gif => {
+  const columns = list.map( gif => {
       return  <Grid.Column key={gif.id}>
                 {(window.location.pathname === '/favorites') ?
                   <button id="remove" onClick={() => props.handleFavoriteRemove(gif)}>x</button>
@@ -17,6 +14,7 @@ const GifGrid = (props) => {
                   size='large'
                   onClick={() => props.handleAddFavorite(gif)}
                   id={gif.id}
+                  data-test="gif"
                   rounded/>
               </Grid.Column>
     })
@@ -33,13 +31,13 @@ const GifGrid = (props) => {
      <Link to="/favorites">{"see favorites"}</Link>
   }
   return (
-    <div style={{textAlign: "center"}}>
-      <button id="toggle" onClick={handleClick}>
+    <div style={{textAlign: "center"}} data-test="component-gifgrid">
+      <button id="toggle" onClick={handleClick} data-test="see-favorites-button">
         {buttonLink()}
       </button>
-      {(columns.length > 0) ? <p className="message">click on gif to save to favorites</p> : <p></p>}
+      {(columns.length > 0) ? <p className="message" data-test="click-gif-message">click on gif to save to favorites</p> : <p></p>}
       {(showFavoriteAdded) ?
-        <p className="message" style={{color: "green", fontStyle: "italic"}}>gif was added to favorites</p>
+        <p className="message" data-test="add-message" style={{color: "green", fontStyle: "italic"}}>gif was added to favorites</p>
         : <p></p>
       }
       <Grid centered>

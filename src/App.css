@@ -22,6 +22,22 @@ button > a {
   color: black;
 }
 
+#search-input {
+    border-radius: 25px;
+    height: 40px;
+    width: 300px;
+    display: inline-block;
+    margin: 10px;
+    padding-left: 10px;
+  }
+
+#search-button {
+  border-radius: 25px;
+  height: 40px;
+  width: 100px;
+  display: inline-block;
+  margin: 10px;
+}
 /************************************** MSGS **********************************/
 
 p {
